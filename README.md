@@ -21,3 +21,7 @@ This repository contains the following folders :
   - **src**, containing all sources
   - **bin**, containing precompiled binaries
   - **output**, containing the resulting .csv files (one example is already on this folder)
+
+## Updates
+
+**19/10/2020** - Added control of the CSV Separator to be used (USA/UK standards or European standards), aswell as output files to show the difference.
