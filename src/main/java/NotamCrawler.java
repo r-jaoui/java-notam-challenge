@@ -49,6 +49,11 @@ public class NotamCrawler {
 	private static final String IdentifierRegex = "[A-Z]{4}-[A-Z][0-9]{4}/[0-9]{2}";
 
 	/**
+	 * The char that defines the separator in the CSV files (for european standards, use ';', for USA/UK standards, use ',')
+	 */
+	private static final char CSVSeparator = ';';
+
+	/**
 	 * Program main method 
 	 * 
 	 * @param args are the main arguments received as the program is launched
@@ -103,7 +108,7 @@ public class NotamCrawler {
 					File file = new File(adress);
 					System.out.println("\tCSV File Created (\""+adress+"\")\n");
 					writer = new BufferedWriter(new FileWriter(file));
-					writer.write("code;Q;A;B;D;E;F;G\n");
+					writer.write("code"+CSVSeparator+"Q"+CSVSeparator+"A"+CSVSeparator+"B"+CSVSeparator+"D"+CSVSeparator+"E"+CSVSeparator+"F"+CSVSeparator+"G\n");
 				}
 				
 				System.out.println("Identifier :"+identifier);
@@ -121,13 +126,13 @@ public class NotamCrawler {
 					System.out.println();
 					if(SAVE) {
 						//Saving all fields onto the .csv file
-						writer.write(identifier+";"+
-								findField(identifierResponse, "Q")+";"+
-								findField(identifierResponse, "A")+";"+
-								findField(identifierResponse, "B")+";"+
-								findField(identifierResponse, "D")+";"+
-								findField(identifierResponse, "E")+";"+
-								findField(identifierResponse, "F")+";"+
+						writer.write(identifier+CSVSeparator+
+								findField(identifierResponse, "Q")+CSVSeparator+
+								findField(identifierResponse, "A")+CSVSeparator+
+								findField(identifierResponse, "B")+CSVSeparator+
+								findField(identifierResponse, "D")+CSVSeparator+
+								findField(identifierResponse, "E")+CSVSeparator+
+								findField(identifierResponse, "F")+CSVSeparator+
 								findField(identifierResponse, "G")+"\n");
 					}
 
@@ -172,7 +177,7 @@ public class NotamCrawler {
 					File file = new File(adress);
 					System.out.println("\tCSV File Created (\""+adress+"\")\n");
 					writer = new BufferedWriter(new FileWriter(file));
-					writer.write("code;Q;A;B;D;E;F;G\n");
+					writer.write("code"+CSVSeparator+"Q"+CSVSeparator+"A"+CSVSeparator+"B"+CSVSeparator+"D"+CSVSeparator+"E"+CSVSeparator+"F"+CSVSeparator+"G\n");
 				}
 
 				//looping through all matches and launching another request to gather all fields for each of them
@@ -197,13 +202,13 @@ public class NotamCrawler {
 						System.out.println();
 						if(SAVE) {
 							//Saving all fields onto the .csv file
-							writer.write(match+";"+
-									findField(identifierResponse, "Q")+";"+
-									findField(identifierResponse, "A")+";"+
-									findField(identifierResponse, "B")+";"+
-									findField(identifierResponse, "D")+";"+
-									findField(identifierResponse, "E")+";"+
-									findField(identifierResponse, "F")+";"+
+							writer.write(match+CSVSeparator+
+									findField(identifierResponse, "Q")+CSVSeparator+
+									findField(identifierResponse, "A")+CSVSeparator+
+									findField(identifierResponse, "B")+CSVSeparator+
+									findField(identifierResponse, "D")+CSVSeparator+
+									findField(identifierResponse, "E")+CSVSeparator+
+									findField(identifierResponse, "F")+CSVSeparator+
 									findField(identifierResponse, "G")+"\n");
 						}
 					}
@@ -355,7 +360,7 @@ public class NotamCrawler {
 		String result = "";
 		if(matcher.find()) {
 			String r = matcher.group(0);
-			result = r.substring(60, r.length() - 1).replace("\n", " ");
+			result = r.substring(60, r.length() - 1).replace("\n", " ").replace(Character.toString(CSVSeparator), ".");
 		}
 
 		return result;
